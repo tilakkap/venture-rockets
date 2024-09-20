@@ -33,7 +33,7 @@ jobs:
 
   # Step to create the directory if it doesn't exist
     - name: Create directory on VPS
-      uses: appleboy/ssh-action@v0.1.4
+      uses: appleboy/ssh-action@master
       with:
         host: hoppe.icu
         username: ${{ env.VPS_USER }}
