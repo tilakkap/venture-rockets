@@ -39,7 +39,7 @@ jobs:
         username: ${{ env.VPS_USER }}
         key: ${{ secrets.VPS_SSH_KEY }}
         script: |
-          mkdir -p /path/on/vps
+          mkdir -p ${{ env.VPS_DIRECTORY }}
 
     - name: Copy docker-compose.yml to VPS
       uses: appleboy/scp-action@v0.1.1
