@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - main
+env:  # Define environment variables at the workflow level
+  VPS_DIRECTORY: /home/thomas/docker/venture-rockets
+  VPS_HOST: hoppe.icu
+  VPS_USER: thomas
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -27,4 +32,36 @@ jobs:
       with:
         push: true
         tags: ghcr.io/tilakkap/venture-rockets:latest
+
+
+  # Step to create the directory if it doesn't exist
+    - name: Create directory on VPS
+      uses: appleboy/ssh-action@v0.1.4
+      with:
+        host: your_vps_ip
+        username: your_vps_user
+        key: ${{ secrets.VPS_SSH_KEY }}
+        script: |
+          mkdir -p /path/on/vps
+
+    - name: Copy docker-compose.yml to VPS
+      uses: appleboy/scp-action@v0.1.1
+      with:
+        host: ${{ env.VPS_HOST }}
+        username: ${{ env.VPS_USER }}
+        key: ${{ secrets.VPS_SSH_KEY }}
+        source: ./docker-compose.yml
+        target: ${{ env.VPS_DIRECTORY }}/docker-compose.yml
+
+    - name: Deploy to VPS via SSH
+      uses: appleboy/ssh-action@v0.1.4
+      with:
+        host: hoppe.icu
+        username: ${{ VPS_USER }}
+        key: ${{ secrets.VPS_SSH_KEY }}
+        script: |
+          mkdir -p ${{ env.VPS_DIRECTORY }}
+          cd ${{ env.VPS_DIRECTORY }}
+          docker-compose pull
+          docker-compose up -d
         
