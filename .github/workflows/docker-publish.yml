@@ -12,9 +12,6 @@ env:  # Define environment variables at the workflow level
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
 
     steps:
     - name: Checkout repository
@@ -38,8 +35,8 @@ jobs:
     - name: Create directory on VPS
       uses: appleboy/ssh-action@v0.1.4
       with:
-        host: your_vps_ip
-        username: your_vps_user
+        host: hoppe.icu
+        username: ${{ env.VPS_USER }}
         key: ${{ secrets.VPS_SSH_KEY }}
         script: |
           mkdir -p /path/on/vps
@@ -57,7 +54,7 @@ jobs:
       uses: appleboy/ssh-action@v0.1.4
       with:
         host: hoppe.icu
-        username: ${{ VPS_USER }}
+        username: ${{ env.VPS_USER }}
         key: ${{ secrets.VPS_SSH_KEY }}
         script: |
           mkdir -p ${{ env.VPS_DIRECTORY }}
