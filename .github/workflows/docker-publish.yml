@@ -17,6 +17,18 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
+    # Step 1: Checkout code
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Step 2: Print the full path using GITHUB_WORKSPACE
+    - name: Print GITHUB_WORKSPACE
+      run: echo "The full path of the checked-out project is $GITHUB_WORKSPACE"
+
+    # Step 3: Print the full path using the pwd command
+    - name: Print current working directory
+      run: pwd
+
     - name: Log in to the Container registry
       uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
       with:
@@ -49,6 +61,7 @@ jobs:
         key: ${{ secrets.VPS_SSH_KEY }}
         source: ./docker-compose.yml
         target: ${{ env.VPS_DIRECTORY }}/docker-compose.yml
+        overwrite: true
 
     - name: Deploy to VPS via SSH
       uses: appleboy/ssh-action@v1.0.3
