@@ -60,6 +60,7 @@ jobs:
         script: |
           mkdir -p ${{ env.VPS_DIRECTORY }}
           cd ${{ env.VPS_DIRECTORY }}
+          docker login --username tilakkap --password ${{ secret.GHRC_SECRET }} ghcr.io
           docker compose pull
           docker compose up -d
         
