@@ -1,6 +1,6 @@
 version: "3"
 services:
-  nginx_test:
+  venture-rockets:
     image: ghcr.io/tilakkap/venture-rockets:latest
     labels:
       - "traefik.enable=true"
