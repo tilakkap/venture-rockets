@@ -38,7 +38,7 @@ jobs:
           mkdir -p ${{ env.VPS_DIRECTORY }}
 
     - name: Copy docker-compose.yml to VPS
-      uses: appleboy/scp-action@v0.1.7
+      uses: appleboy/scp-action@master
       with:
         host: ${{ env.VPS_HOST }}
         username: ${{ env.VPS_USER }}
