@@ -38,15 +38,13 @@ jobs:
           mkdir -p ${{ env.VPS_DIRECTORY }}
 
     - name: Copy docker-compose.yml to VPS
-      uses: appleboy/scp-action@master
+      uses: srueda99/scp-action@v12
       with:
         host: ${{ env.VPS_HOST }}
         username: ${{ env.VPS_USER }}
         key: ${{ secrets.VPS_SSH_KEY }}
-        source: ./docker-compose.yml
-        target: ${{ env.VPS_DIRECTORY }}/
-        overwrite: true
-        strip_components: 1
+        origin: ./docker-compose.yml
+        destination: ${{ env.VPS_DIRECTORY }}/
 
     - name: Deploy to VPS via SSH
       uses: appleboy/ssh-action@v1.0.3
